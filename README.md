@@ -62,3 +62,105 @@ fetch(apiUrl)
 These examples should help you get started with querying the CoinGecko API from the JavaScript console. If you have any more questions or need further assistance, feel free to ask! 😊
 
 You can find more information about the CoinGecko API [here](https://www.coingecko.com/en/api/documentation).
+
+NOTE: FOLLOWING BOTS MOSTLY WORK OFF THE BAT< EXCEPT NEWS.
+
+Sure thing! Here are some fun mini-bots for JavaScript beginners that use the CoinGecko API. These scripts are great for learning and experimenting with API interactions:
+
+### 1. **Crypto Price Checker**
+This bot fetches the current price of a specified cryptocurrency and logs it to the console.
+
+```javascript
+const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Bitcoin Price in USD:', data.bitcoin.usd);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+```
+
+### 2. **Top Gainers and Losers**
+This bot fetches the top gainers and losers in the cryptocurrency market.
+
+```javascript
+const apiUrl = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false';
+
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    const gainers = data.sort((a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h).slice(0, 5);
+    const losers = data.sort((a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h).slice(0, 5);
+
+    console.log('Top 5 Gainers:', gainers);
+    console.log('Top 5 Losers:', losers);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+```
+
+### 3. **Crypto Market Cap**
+This bot fetches the market capitalization of a specified cryptocurrency.
+
+```javascript
+const apiUrl = 'https://api.coingecko.com/api/v3/coins/bitcoin';
+
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Bitcoin Market Cap:', data.market_data.market_cap.usd);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+```
+
+### 4. **Crypto News Fetcher**
+This bot fetches the latest news articles related to cryptocurrencies.
+
+```javascript
+const apiUrl = 'https://api.coingecko.com/api/v3/news';
+
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    console.log('Latest Crypto News:', data);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+```
+
+### 5. **Crypto Portfolio Tracker**
+This bot tracks the value of a simple crypto portfolio.
+
+```javascript
+const portfolio = {
+  bitcoin: 0.5,
+  ethereum: 2,
+  litecoin: 10
+};
+
+const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin&vs_currencies=usd';
+
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    const totalValue = Object.keys(portfolio).reduce((acc, coin) => {
+      return acc + (portfolio[coin] * data[coin].usd);
+    }, 0);
+
+    console.log('Total Portfolio Value in USD:', totalValue);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+```
+
+These scripts should give you a good starting point for building your own mini-bots using the CoinGecko API. Have fun experimenting and learning! 😊
+
+You can find more information on building bots with the CoinGecko API [here](https://www.coingecko.com/learn/ai-crypto-chatbot).
